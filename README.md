@@ -1,10 +1,10 @@
 # ENPM661_Project1
 ## 8 puzzle solver
 
-###Libraries used
+### Libraries used
 numpy
 
-###Run instructions
+### Run instructions
 goal node is set as
 [1 2 3
  4 5 6
