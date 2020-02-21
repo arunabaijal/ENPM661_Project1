@@ -9,7 +9,7 @@ goal node is set as <br />
 [1 2 3 <br />
  4 5 6 <br />
  7 8 0] <br />
-Goal node can be chnaged in main method at line 137
+Goal node can be chnaged in main method at line 138
 
 
 To change start node change root node in main method at line 136
