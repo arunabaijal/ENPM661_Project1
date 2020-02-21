@@ -114,6 +114,24 @@ def solvabilityCheck(root):
     else:
         return False
 
+def generate_path(node, root):
+    while (not np.array_equal(node.state, root)):
+        # print(node.state)
+        # print(node.action)
+        f = open("nodePath.txt", "r+")
+        content = f.read()
+        f.seek(0, 0)
+        toWrite = str(np.transpose(node.state).reshape(1, 9)[0])
+        f.write(toWrite[1:len(toWrite) - 1] + '\n' + content)
+        f.close()
+        node = node.parent
+    f = open("nodePath.txt", "r+")
+    content = f.read()
+    f.seek(0, 0)
+    toWrite = str(np.transpose(node.state).reshape(1, 9)[0])
+    f.write(toWrite[1:len(toWrite) - 1] + '\n' + content)
+    f.close()
+
 def main():
     root = np.array([[1,0,3],[4,2,5],[7,8,6]])
     goal = [[1,2,3],[4,5,6],[7,8,0]]
@@ -123,26 +141,8 @@ def main():
         startNode = Node(root, None, 1)
         node = startNode.bfs(goal)
         open('nodePath.txt', 'w').close()
-        if node:
-            print("Found path")
-            while(not np.array_equal(node.state, root)):
-                # print(node.state)
-                # print(node.action)
-                f = open("nodePath.txt", "r+")
-                content = f.read()
-                f.seek(0, 0)
-                toWrite = str(np.transpose(node.state).reshape(1,9)[0])
-                f.write(toWrite[1:len(toWrite)-1] + '\n' + content)
-                f.close()
-                node = node.parent
-            f = open("nodePath.txt", "r+")
-            content = f.read()
-            f.seek(0, 0)
-            toWrite = str(np.transpose(node.state).reshape(1, 9)[0])
-            f.write(toWrite[1:len(toWrite)-1] + '\n' + content)
-            f.close()
-        else:
-            print("Path not found")
+        print("Found path")
+        generate_path(node, root)
 
 
 if __name__ == '__main__':
