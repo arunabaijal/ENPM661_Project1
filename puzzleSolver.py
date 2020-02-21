@@ -8,7 +8,7 @@ class Node():
 
     def moveDown(self):
         emptyTile = np.where(self.state == 0)
-        if emptyTile[0][0] == 2:
+        if emptyTile[0][0] == 2: # check if empty tile at edge
             return False
         else:
             bottom = self.state[emptyTile[0] + 1, emptyTile[1]]
@@ -19,7 +19,7 @@ class Node():
 
     def moveUp(self):
         emptyTile = np.where(self.state == 0)
-        if emptyTile[0][0] == 0:
+        if emptyTile[0][0] == 0: # check if empty tile at edge
             return False
         else:
             up = self.state[emptyTile[0] - 1, emptyTile[1]]
@@ -30,7 +30,7 @@ class Node():
 
     def moveRight(self):
         emptyTile = np.where(self.state == 0)
-        if emptyTile[1][0] == 2:
+        if emptyTile[1][0] == 2: # check if empty tile at edge
             return False
         else:
             right = self.state[emptyTile[0], emptyTile[1] + 1]
@@ -41,7 +41,7 @@ class Node():
 
     def moveLeft(self):
         emptyTile = np.where(self.state == 0)
-        if emptyTile[1][0] == 0:
+        if emptyTile[1][0] == 0: # check if empty tile at edge
             return False
         else:
             left = self.state[emptyTile[0], emptyTile[1] - 1]
@@ -51,7 +51,7 @@ class Node():
             return childNode, left
 
     def bfs(self, goal):
-        open('Nodes.txt', 'w').close()
+        open('Nodes.txt', 'w').close() # clearing files
         open('NodesInfo.txt', 'w').close()
         visited = []
         visited = set(visited)
@@ -68,13 +68,14 @@ class Node():
             f.write(toWrite[1:len(toWrite) - 1] + '\n')
             f2.write(str(visitingNode.index) + ' ' + str(
             0 if visitingNode.parent == None else visitingNode.parent.index) + '\n')
-            if(tuple(node.reshape(1, 9)[0]) in visited):
+            if(tuple(node.reshape(1, 9)[0]) in visited): # check if node alredy visited
                 continue
             else:
-                if(np.array_equal(node, goal)):
+                if(np.array_equal(node, goal)): # check if goal found
                     f.close()
                     f2.close()
                     return visitingNode
+                # create all possible children
                 if(visitingNode.moveUp()):
                     new, up = visitingNode.moveUp()
                     if not (tuple(new.reshape(1, 9)[0]) in visited):
@@ -116,8 +117,6 @@ def solvabilityCheck(root):
 
 def generate_path(node, root):
     while (not np.array_equal(node.state, root)):
-        # print(node.state)
-        # print(node.action)
         f = open("nodePath.txt", "r+")
         content = f.read()
         f.seek(0, 0)
@@ -133,7 +132,9 @@ def generate_path(node, root):
     f.close()
 
 def main():
+    # start node
     root = np.array([[1,0,3],[4,2,5],[7,8,6]])
+    # goal node
     goal = [[1,2,3],[4,5,6],[7,8,0]]
     if not solvabilityCheck(root):
         print("Not solvable!")
