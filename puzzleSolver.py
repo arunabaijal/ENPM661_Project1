@@ -102,6 +102,17 @@ class Node():
         return False
 
 
+def solvabilityCheck(root):
+    root = root.reshape(1,9)[0]
+    count = 0
+    for i in range(8):
+        for j in range(i,9):
+            if(root[i] != 0 and root[j] != 0 and root[i] > root[j]):
+                count += 1
+    if(count % 2 == 0):
+        return True
+    else:
+        return False
 
 
 
